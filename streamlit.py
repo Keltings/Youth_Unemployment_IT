@@ -11,20 +11,8 @@ edu_data_path = "Datasets/ken_rwa_edu.csv"
 pop_df = pd.read_csv(pop_data_path)
 edu_df = pd.read_csv(edu_data_path)
 
-# Sidebar
-st.sidebar.title("Country Selection")
-selected_country = st.sidebar.selectbox("Select Country", pop_df['name'].unique())
-selected_analysis = st.sidebar.radio("Select Analysis", ["Population", "Education", "Home"])
-
-# Filter the data for the selected country
-pop_filtered_df = pop_df[pop_df['name'] == selected_country]
-edu_filtered_df = edu_df[edu_df['name'] == selected_country]
-
-# Main app
-st.title("Population and Education Analysis Dashboard")
-
-# Summary page
-if st.sidebar.button("Home"):
+# Define a function for the summary page
+def show_summary():
     st.title("Dashboard Summary")
     st.write("Welcome to the Population and Education Analysis Dashboard! This dashboard allows you to explore and analyze population and labor market trends in different countries. You can select a country from the sidebar and choose between two types of analysis: Population Analysis and Education Analysis.")
 
@@ -39,11 +27,59 @@ if st.sidebar.button("Home"):
     st.write("- You can also investigate labor market trends by education level, unemployment categories, age group, and gender using bar plots.")
 
     st.write("Feel free to explore different countries, toggle between analyses, and interact with the visualizations to gain insights into population and labor market trends.")
-
     st.write("Please use the sidebar to get started!")
+    # Compare total employment and unemployment population for Kenya and Rwanda
+    # Main app
+    # Calculate total unemployed and employed population sums
+    grouped_data = pop_df.groupby(['name', 'age_group', 'sex', 'year'])[['total_unemployed_population', 'total_employed_population']].sum().reset_index()
+
+    # Create a bar plot for total unemployed and employed population sums
+    fig = px.bar(grouped_data, x='year', y='total_unemployed_population',
+                color='name', hover_data = ['sex'], barmode='group', facet_col = 'age_group',
+                title=f"Total Unemployed  Population Sums by Year",
+                labels={'value': 'Population'})
+
+    fig.update_layout(
+        xaxis_title="Year",
+        yaxis_title="Total employed Population",
+        legend_title="Country",
+        legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
+    )
+    fig.update_yaxes(matches='y')
+    st.plotly_chart(fig)
+
+    fig = px.bar(grouped_data, x='year', y='total_employed_population',
+                color='name', hover_data = ['sex'], barmode='group', facet_col = 'age_group',
+                title=f"Total employed  Population Sums by Year",
+                labels={'value': 'Population'})
+
+    fig.update_layout(
+        xaxis_title="Year",
+        yaxis_title="Total employed Population",
+        legend_title="Country",
+        legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01)
+    )
+    fig.update_yaxes(matches='y')
+    st.plotly_chart(fig)
 
 
-if selected_analysis == "Population":
+# Sidebar
+st.sidebar.title("Country Selection")
+selected_country = st.sidebar.selectbox("Select Country", pop_df['name'].unique())
+selected_page = st.sidebar.radio("Select Analysis", ["Summary", "Population", "Education"])
+
+# Filter the data for the selected country
+pop_filtered_df = pop_df[pop_df['name'] == selected_country]
+edu_filtered_df = edu_df[edu_df['name'] == selected_country]
+
+# Main app
+st.title("Population and Education Analysis Dashboard")
+
+# Display the selected page
+if selected_page == "Summary":
+    show_summary()
+
+elif selected_page == "Population":
     # Set color palette for the plots
     color_palette = px.colors.qualitative.Set1
     
@@ -116,7 +152,7 @@ if selected_analysis == "Population":
 
 
 
-if selected_analysis == "Education":
+elif selected_page == "Education":
     # Education level distribution by age group (pie chart)
     fig_edu_pie = px.pie(edu_filtered_df, names='age_group', values='population',
                          title=f"Education Level Distribution by Age Group ({selected_country})",
