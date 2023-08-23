@@ -135,4 +135,5 @@ b.	Highlighting the most significant findings and explaining their implications 
 - Special thanks to Derick Lubanga, Sharon Tonui, Laurine Eyinda, David Nene for their valuable contributions and feedback during the development of this project.
 
 ### Contact Information
-        Provide your contact details or social media handles for further inquiries.
+- lkelida@gmail.com
+- [lindah-kelida](https://www.linkedin.com/in/lindah-kelida/)
