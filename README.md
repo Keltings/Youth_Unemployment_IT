@@ -113,7 +113,26 @@ b.	Highlighting the most significant findings and explaining their implications 
 6.	*Slide 6*: Recommendation/gaps/potential impact
 
 ### Acknowledgments
-        Acknowledge any data sources, libraries, or tutorials you used.
+        
+## Acknowledgments
+
+### Data Sources
+- The population and education datasets used in this project were obtained from [Source A](link-to-source-a) and [Source B](link-to-source-b).
+
+### Libraries and Frameworks
+- This project was built using Python programming language and leveraged the following libraries:
+  - Pandas
+  - Plotly
+  - Streamlit
+  - Matplotlib
+
+### Tutorials and References
+- The creation of the Streamlit dashboard was inspired by the official [Streamlit documentation](https://docs.streamlit.io/).
+- [Fire Blaze AI](https://www.fireblazeaischool.in/blogs/data-visualization-using-plotly/) provided guidance on data visualization using Plotly.
+- [Explore AI](https://github.com/Explore-AI) helped in handling data pre processing.
+
+### Special Thanks
+- Special thanks to Derick Lubanga, Sharon Tonui, Laurine Eyinda, David Nene for their valuable contributions and feedback during the development of this project.
 
 ### Contact Information
         Provide your contact details or social media handles for further inquiries.
