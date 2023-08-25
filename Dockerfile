@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Keltings/Youth_Unemployment_IT.git .
+# RUN git clone https://github.com/Keltings/Youth_Unemployment_IT.git .
+COPY ./ /app
 
 RUN pip install streamlit
 
@@ -21,6 +22,6 @@ EXPOSE 8501
 
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
-ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=80", "--server.address=0.0.0.0"]
 
 # CMD source /app/.venv/bin/activate && exec streamlit run ...
